@@ -48,7 +48,7 @@ public class TableGenerator : MonoBehaviour
         switch(scene.name)
         {
             case "Level1":
-                OnLevelLoaded(1, 0);
+                OnLevelLoaded(2, 4);
                 break;
         }
     }
@@ -95,7 +95,7 @@ public class TableGenerator : MonoBehaviour
     {
         // Calculating amount of cells required based on amount of variables
         int columns = variablesQty + expressionsQty;
-        int rows = (int)Mathf.Pow(2, columns) + 1;
+        int rows = (int)Mathf.Pow(2, variablesQty) + 1;
         
         // Creating table
         cells = new GameObject[rows, columns];
@@ -128,6 +128,17 @@ public class TableGenerator : MonoBehaviour
 
                 cells[row, col] = Instantiate(cell, position, Quaternion.identity);
                 cells[row, col].SetActive(false);
+
+                // Setting cell information
+                Cell currentCell = cells[row, col].GetComponent<Cell>();
+                currentCell.RowNumber = row;
+                currentCell.ColumnNumber = col;
+
+                // To make headers unclickable
+                if (row == 0)
+                    currentCell.IsHeader = true;
+                else
+                    currentCell.IsHeader = false;
             }
         }
     }
