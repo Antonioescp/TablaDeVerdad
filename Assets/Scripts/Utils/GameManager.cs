@@ -17,5 +17,8 @@ public class GameManager : MonoBehaviour
             alreadyExist = true;
             DontDestroyOnLoad(gameObject);
         }
+
+        // Initializing screen utils
+        ScreenUtils.Initialize();
     }
 }
