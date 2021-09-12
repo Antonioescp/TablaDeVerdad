@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     /// <summary>
     /// Loads Selected Level
@@ -12,5 +12,15 @@ public class LevelMenu : MonoBehaviour
     public void LoadLevel(string name)
     {
         SceneManager.LoadScene(name);
+    }
+
+    public void GoToMainMenu()
+    {
+        MenuManager.GoToMenu(MenuName.MainMenu);
+    }
+
+    public void GoToLevelMenu()
+    {
+        MenuManager.GoToMenu(MenuName.LevelMenu);
     }
 }
