@@ -9,35 +9,92 @@ public class TableGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject cell;
 
+    // Table cells
     private GameObject[,] cells;
 
+    // To position rows and columns accordingly with respect to screen center
     SpriteRenderer cellSpRenderer;
 
-    private void Awake()
+    // Spawning timer (spawn one after another)
+    Timer spawningTimer;
+
+    // Current row and column
+    private int row = 0;
+    private int column = 0;
+
+    /// <summary>
+    /// Just to set things up
+    /// </summary>
+    private void Start()
     {
         // Getting cell sprite
         cellSpRenderer = cell.GetComponent<SpriteRenderer>();
 
-        // Generating table OnLevelLoaded
-        GenerateTable(2);
+        // Setting timer for spawning cells
+        spawningTimer = gameObject.AddComponent<Timer>();
+        spawningTimer.Duration = 0.15f;
+        spawningTimer.AddListener(SpawnNextCell);
+
+        // Listening for scene change
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+
+    /// <summary>
+    /// Called on scene change
+    /// </summary>
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        switch(scene.name)
+        {
+            case "Level1":
+                OnLevelLoaded(1, 0);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Sets a cell activated
+    /// </summary>
+    private void SpawnNextCell()
+    {
+        if(column < cells.GetLength(1))
+        {
+            if(row < cells.GetLength(0))
+            {
+                cells[row, column].SetActive(true);
+                row++;
+            }
+            else
+            {
+                row = 0;
+                column++;
+            }
+            spawningTimer.Run();
+        }
+        else
+        {
+            spawningTimer.Stop();
+        }
     }
 
     /// <summary>
     /// It runs when the level starts
     /// </summary>
-    private void OnLevelLoaded()
+    private void OnLevelLoaded(int variables, int expressions)
     {
-        GenerateTable(SceneManager.GetActiveScene().buildIndex);
+        GenerateTable(variables, expressions);
+        SpawnNextCell();
     }
 
     /// <summary>
     /// Generates a table based on the amount of variables
     /// </summary>
     /// <param name="variablesQty">Amount of variables</param>
-    private void GenerateTable(int variablesQty)
+    private void GenerateTable(int variablesQty, int expressionsQty)
     {
         // Calculating amount of cells required based on amount of variables
-        int columns = variablesQty;
+        int columns = variablesQty + expressionsQty;
         int rows = (int)Mathf.Pow(2, columns) + 1;
         
         // Creating table
@@ -69,9 +126,8 @@ public class TableGenerator : MonoBehaviour
                 position.x = calculateColumnPosition(col);
                 position.y = calculateRowPosition(row);
 
-                Debug.Log($"Cell [{row},{col}]: {position.x} {position.y}");
-
                 cells[row, col] = Instantiate(cell, position, Quaternion.identity);
+                cells[row, col].SetActive(false);
             }
         }
     }

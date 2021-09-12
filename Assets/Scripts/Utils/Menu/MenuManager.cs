@@ -9,4 +9,17 @@ public static class MenuManager
     {
         SceneManager.LoadScene(level.ToString());
     }
+
+    public static void GoToMenu(MenuName menu)
+    {
+        switch(menu)
+        {
+            case MenuName.MainMenu:
+                SceneManager.LoadScene("MainMenu");
+                break;
+            case MenuName.LevelMenu:
+                SceneManager.LoadScene("LevelMenu");
+                break;
+        }
+    }
 }
