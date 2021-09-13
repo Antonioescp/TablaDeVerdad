@@ -106,15 +106,15 @@ public class TableGenerator : MonoBehaviour
 
         // Selecting calculation process depending on amount of columns
         if (columns % 2 == 0)
-            calculateColumnPosition = (pos) => (pos - columns / 2) * cellSpRenderer.size.x + cellSpRenderer.size.x / 2;
+            calculateColumnPosition = (pos) => (pos - columns / 2) * cellSpRenderer.bounds.size.x + cellSpRenderer.bounds.size.x / 2;
         else
-            calculateColumnPosition = (pos) => (pos - columns / 2) * cellSpRenderer.size.x;
+            calculateColumnPosition = (pos) => (pos - columns / 2) * cellSpRenderer.bounds.size.x;
 
         // Selecting calculation process depending on amount of rows
         if (rows % 2 == 0)
-            calculateRowPosition = (pos) => (rows / 2 - pos) * cellSpRenderer.size.y + cellSpRenderer.size.y / 2;
+            calculateRowPosition = (pos) => (rows / 2 - pos) * cellSpRenderer.bounds.size.y + cellSpRenderer.bounds.size.y / 2;
         else
-            calculateRowPosition = (pos) => (rows / 2 - pos) * cellSpRenderer.size.y;
+            calculateRowPosition = (pos) => (rows / 2 - pos) * cellSpRenderer.bounds.size.y;
 
         // Instantiating cells and positioning them
         for (int row = 0; row < rows; row++)

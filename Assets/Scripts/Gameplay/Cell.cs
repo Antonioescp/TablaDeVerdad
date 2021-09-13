@@ -6,6 +6,9 @@ public class Cell : MonoBehaviour
 {
     [SerializeField] private Animator anim;
 
+    [SerializeField] private Sprite trueSprite;
+    [SerializeField] private Sprite falseSprite;
+
     private CellState state = CellState.Unchanged;
     private SpriteRenderer cellSprite;
 
@@ -21,9 +24,13 @@ public class Cell : MonoBehaviour
     private void OnMouseDown()
     {
         if (state == CellState.Unchanged || state == CellState.False)
+        {
             state = CellState.True;
+        }
         else
+        {
             state = CellState.False;
+        }
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Click"))
             anim.SetTrigger("OnClick");
@@ -45,6 +52,19 @@ public class Cell : MonoBehaviour
         {
             anim.SetBool("OnHover", false);
             cellSprite.sortingOrder = 0;
+        }
+    }
+
+    private void OnStateChange()
+    {
+        switch (state)
+        {
+            case CellState.True:
+                cellSprite.sprite = trueSprite;
+                break;
+            case CellState.False:
+                cellSprite.sprite = falseSprite;
+                break;
         }
     }
 }
