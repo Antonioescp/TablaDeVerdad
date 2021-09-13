@@ -1,0 +1,44 @@
+--
+p
+
+v,f
+--
+p, q
+¬p
+v,v,f,f;v,f,v,f;f,f,v,v
+--
+p, q
+¬p, ¬q
+v,v,f,f;v,f,v,f;f,f,v,v;f,v,f,v
+--
+p, q
+p^q
+v,v,f,f;v,f,v,f;v,f,f,f
+--
+p, q
+pvq
+v,v,f,f;v,f,v,f;v,v,v,f
+--
+p, q
+p-->q
+v,v,f,f;v,f,v,f;v,f,v,v
+--
+p, q
+p<-->q
+v,v,f,f;v,f,v,f;v,f,f,v
+--
+p, q
+¬q, p-->q, ¬q^(p-->q)
+v,v,f,f;v,f,v,f;f,v,f,v;v,f,v,v;f,f,f,v
+--
+p, q, r
+
+v,v,v,v,f,f,f,f;v,v,f,f,v,v,f,f;v,f,v,f,v,f,v,f
+--
+p, q, r
+¬p, qvr, ¬p-->(qvr)
+v,v,v,v,f,f,f,f;v,v,f,f,v,v,f,f;v,f,v,f,v,f,v,f;f,f,f,f,v,v,v,v;v,v,v,f,v,v,v,f;v,v,v,v,v,v,v,f
+--
+p, q, r
+¬p, (p^q), ¬(p^q), (r^¬p), ¬(p^q)v(r^¬p)
+v,v,v,v,f,f,f,f;v,v,f,f,v,v,f,f;v,f,v,f,v,f,v,f;f,f,f,f,v,v,v,v;v,v,f,f,f,f,f,f;f,f,v,v,v,v,v,v;f,f,f,f,v,f,v,f;f,f,v,v,v,v,v,v
