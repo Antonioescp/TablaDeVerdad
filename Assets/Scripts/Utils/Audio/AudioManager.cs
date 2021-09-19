@@ -42,8 +42,9 @@ public static class AudioManager
         audioClips = new Dictionary<AudioClipName, AudioClip>();
 
         // Loading audioclips
-        audioClips.Add(AudioClipName.Level1, Resources.Load<AudioClip>("Sounds/Soundtrack1"));
+        audioClips.Add(AudioClipName.STMain, Resources.Load<AudioClip>("Sounds/Soundtrack1"));
         audioClips.Add(AudioClipName.SFXPop, Resources.Load<AudioClip>("Sounds/SFXPop"));
+        audioClips.Add(AudioClipName.SFXClick, Resources.Load<AudioClip>("Sounds/SFXClick"));
 
         // flagging initialization
         initialized = true;
@@ -74,9 +75,12 @@ public static class AudioManager
     /// <param name="name">Audioclip name</param>
     public static void PlaySoundtrack(AudioClipName name)
     {
-        soundtrackSource.clip = audioClips[name];
-        soundtrackSource.loop = true;
-        soundtrackSource.Play();
+        if(soundtrackSource.clip != audioClips[name])
+        {
+            soundtrackSource.clip = audioClips[name];
+            soundtrackSource.loop = true;
+            soundtrackSource.Play();
+        }
     }
 
     #endregion

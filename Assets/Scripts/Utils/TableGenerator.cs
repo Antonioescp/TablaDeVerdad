@@ -36,7 +36,7 @@ public class TableGenerator : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        spawningTimer.Duration = 0.15f;
+        spawningTimer.Duration = 0.1f;
         spawningTimer.AddListener(SpawnNextCell);
 
         // Generando tabla de la verdad a partir de datos de nivel

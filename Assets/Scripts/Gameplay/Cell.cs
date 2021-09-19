@@ -5,9 +5,12 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     [SerializeField] private Animator anim;
-
     [SerializeField] private Sprite trueSprite;
     [SerializeField] private Sprite falseSprite;
+    
+    [Header(header: "Events")]
+    [SerializeField] private GameEvent onSpawn;
+    [SerializeField] private GameEvent onClick;
 
     private CellState state = CellState.Unchanged;
     private SpriteRenderer cellSprite;
@@ -22,34 +25,14 @@ public class Cell : MonoBehaviour
         cellSprite = GetComponent<SpriteRenderer>();
     }
 
-    private void OnMouseOver()
+    private void Start()
     {
-        if(!IsHeader)
-        {
-            anim.SetBool("Hover", true);
-        }
+        onSpawn.Raise();
     }
 
-    private void OnMouseExit()
+    private void ChangeState()
     {
-        if(!IsHeader)
-        {
-            anim.SetBool("Hover", false);
-        }
-    }
-
-    private void OnHoverStart()
-    {
-        cellSprite.sortingOrder = 1;
-    }
-
-    private void OnHoverEnd()
-    {
-        cellSprite.sortingOrder = 0;
-    }
-
-    private void OnStateChange()
-    {
+        state = state == CellState.True ? CellState.False : CellState.True;
         switch (state)
         {
             case CellState.True:
@@ -59,12 +42,25 @@ public class Cell : MonoBehaviour
                 cellSprite.sprite = falseSprite;
                 break;
         }
-
-        AudioManager.PlayOneShot(AudioClipName.SFXPop);
     }
 
-    private void OnSpawn()
+    private void OnMouseDown()
     {
-        AudioManager.PlayOneShot(AudioClipName.SFXPop);
+        if(!IsHeader)
+            ChangeState();
+
+        onClick.Raise();
+    }
+
+    private void OnMouseEnter()
+    {
+        if(!IsHeader)
+            anim.SetBool("Hover", true);
+    }
+
+    private void OnMouseExit()
+    {
+        if(!IsHeader)
+            anim.SetBool("Hover", false);
     }
 }

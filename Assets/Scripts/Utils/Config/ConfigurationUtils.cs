@@ -8,5 +8,11 @@ public static class ConfigurationUtils
 
     public static List<ConfigurationData.Table> Tables => data.Tables;
 
-    public static void Initialize() => data = new ConfigurationData();
+    public static bool Initialized { get; private set; }
+
+    public static void Initialize()
+    {
+        data = new ConfigurationData();
+        Initialized = true;
+    }
 }
