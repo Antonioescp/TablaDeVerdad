@@ -42,6 +42,8 @@ public static class AudioManager
         audioClips = new Dictionary<AudioClipName, AudioClip>();
 
         // Loading audioclips
+        audioClips.Add(AudioClipName.Level1, Resources.Load<AudioClip>("Sounds/Soundtrack1"));
+        audioClips.Add(AudioClipName.SFXPop, Resources.Load<AudioClip>("Sounds/SFXPop"));
 
         // flagging initialization
         initialized = true;

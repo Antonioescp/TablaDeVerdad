@@ -4,5 +4,6 @@ using UnityEngine;
 
 public enum AudioClipName
 {
+    SFXPop,
     Level1
 }

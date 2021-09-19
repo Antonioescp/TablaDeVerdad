@@ -21,6 +21,7 @@ public class Menu : MonoBehaviour
 
     public void GoToLevelMenu()
     {
+        AudioManager.PlayOneShot(AudioClipName.SFXPop);
         MenuManager.GoToMenu(MenuName.LevelMenu);
     }
 }

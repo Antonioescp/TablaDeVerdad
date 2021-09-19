@@ -15,44 +15,37 @@ public class Cell : MonoBehaviour
     public int RowNumber { get; set; }
     public int ColumnNumber { get; set; }
     public bool IsHeader { get; set; }
+    public SpriteRenderer CellSprite => cellSprite;
 
-    private void Start()
+    private void Awake()
     {
         cellSprite = GetComponent<SpriteRenderer>();
     }
 
-    private void OnMouseDown()
-    {
-        if (state == CellState.Unchanged || state == CellState.False)
-        {
-            state = CellState.True;
-        }
-        else
-        {
-            state = CellState.False;
-        }
-
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Click"))
-            anim.SetTrigger("OnClick");
-    }
-
     private void OnMouseOver()
     {
-        if (!IsHeader)
+        if(!IsHeader)
         {
-            anim.SetBool("OnHover", true);
-            cellSprite.sortingOrder = 1;
+            anim.SetBool("Hover", true);
         }
-        
     }
 
     private void OnMouseExit()
     {
-        if (!IsHeader)
+        if(!IsHeader)
         {
-            anim.SetBool("OnHover", false);
-            cellSprite.sortingOrder = 0;
+            anim.SetBool("Hover", false);
         }
+    }
+
+    private void OnHoverStart()
+    {
+        cellSprite.sortingOrder = 1;
+    }
+
+    private void OnHoverEnd()
+    {
+        cellSprite.sortingOrder = 0;
     }
 
     private void OnStateChange()
@@ -66,5 +59,12 @@ public class Cell : MonoBehaviour
                 cellSprite.sprite = falseSprite;
                 break;
         }
+
+        AudioManager.PlayOneShot(AudioClipName.SFXPop);
+    }
+
+    private void OnSpawn()
+    {
+        AudioManager.PlayOneShot(AudioClipName.SFXPop);
     }
 }

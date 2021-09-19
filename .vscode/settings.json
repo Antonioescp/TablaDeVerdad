@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        "[^A]*": true,
+        "**/*.csproj": true,
+        "**/*.meta": true
+    }
+}

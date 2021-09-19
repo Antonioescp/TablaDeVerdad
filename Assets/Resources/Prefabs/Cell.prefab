@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 1120611536008183129}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 29bb8de521dde8743abb4f64949a6675, type: 2}
+  m_Controller: {fileID: 9100000, guid: 08763dc6f92af2c4db2d109ab84e5460, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -143,5 +143,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18.943708, y: 18.943708}
+  m_Size: {x: 19.2, y: 19.2}
   m_EdgeRadius: 0

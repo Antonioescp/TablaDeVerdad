@@ -22,35 +22,26 @@ public class TableGenerator : MonoBehaviour
     private int row = 0;
     private int column = 0;
 
-    /// <summary>
-    /// Just to set things up
-    /// </summary>
-    private void Start()
+    private void Awake()
     {
         // Getting cell sprite
         cellSpRenderer = cell.GetComponent<SpriteRenderer>();
 
         // Setting timer for spawning cells
         spawningTimer = gameObject.AddComponent<Timer>();
+    }
+
+    /// <summary>
+    /// Just to set things up
+    /// </summary>
+    private void Start()
+    {
         spawningTimer.Duration = 0.15f;
         spawningTimer.AddListener(SpawnNextCell);
 
-        // Listening for scene change
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-    }
-
-
-    /// <summary>
-    /// Called on scene change
-    /// </summary>
-    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        switch(scene.name)
-        {
-            case "Level1":
-                OnLevelLoaded(2, 4);
-                break;
-        }
+        // Generando tabla de la verdad a partir de datos de nivel
+        GenerateTable(ConfigurationUtils.Tables[GameManager.LevelSelected].variables.Count, ConfigurationUtils.Tables[GameManager.LevelSelected].expressions.Count);
+        SpawnNextCell();
     }
 
     /// <summary>
@@ -83,8 +74,7 @@ public class TableGenerator : MonoBehaviour
     /// </summary>
     private void OnLevelLoaded(int variables, int expressions)
     {
-        GenerateTable(variables, expressions);
-        SpawnNextCell();
+        
     }
 
     /// <summary>
