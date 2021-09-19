@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class UIButtonManager : MonoBehaviour
 {
     [SerializeField] GameEvent onClick;
+    [SerializeField] GameEvent onInspectTable;
 
     // PlayButton
     public void OnPlay()
@@ -25,5 +26,15 @@ public class UIButtonManager : MonoBehaviour
     {
         onClick.Raise();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void OnQuit()
+    {
+        Application.Quit();
+    }
+
+    public void OnCheckMarkClicked()
+    {
+
     }
 }

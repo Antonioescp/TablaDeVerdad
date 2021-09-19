@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.Events;
 
 public class Cell : MonoBehaviour
 {
@@ -20,14 +22,35 @@ public class Cell : MonoBehaviour
     public bool IsHeader { get; set; }
     public SpriteRenderer CellSprite => cellSprite;
 
+    [Header(header: "Expression support")]
+    [SerializeField] TextMeshPro expressionText;
+
+    private static UnityEvent<Cell> onHeaderClicked;
+
     private void Awake()
     {
         cellSprite = GetComponent<SpriteRenderer>();
+
+        onHeaderClicked = new UnityEvent<Cell>();
     }
 
     private void Start()
     {
         onSpawn.Raise();
+        onHeaderClicked.AddListener(OnHeaderClicked);
+
+        if(IsHeader)
+        {
+            int variablesCount = ConfigurationUtils.Tables[GameManager.LevelSelected].variables.Count;
+            if(ColumnNumber < variablesCount)
+            {
+                expressionText.text = ConfigurationUtils.Tables[GameManager.LevelSelected].variables[ColumnNumber].Trim();
+            }
+            else
+            {
+                expressionText.text = ConfigurationUtils.Tables[GameManager.LevelSelected].expressions[ColumnNumber - variablesCount].Trim();
+            }
+        }
     }
 
     private void ChangeState()
@@ -47,9 +70,15 @@ public class Cell : MonoBehaviour
     private void OnMouseDown()
     {
         if(!IsHeader)
+        {
             ChangeState();
-
-        onClick.Raise();
+            onClick.Raise();
+        }
+        else
+        {
+            onHeaderClicked.Invoke(this);
+            anim.SetBool("HeaderHover", !anim.GetBool("HeaderHover"));
+        }
     }
 
     private void OnMouseEnter()
@@ -62,5 +91,13 @@ public class Cell : MonoBehaviour
     {
         if(!IsHeader)
             anim.SetBool("Hover", false);
+    }
+
+    private void OnHeaderClicked(Cell cell)
+    {
+        if(cell != this)
+        {
+            anim.SetBool("HeaderHover", false);
+        }
     }
 }

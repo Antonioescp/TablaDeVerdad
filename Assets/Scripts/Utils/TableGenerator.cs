@@ -8,6 +8,7 @@ using System;
 public class TableGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject cell;
+    [SerializeField] private GameEvent onInspectTable;
 
     // Table cells
     private GameObject[,] cells;
@@ -67,14 +68,6 @@ public class TableGenerator : MonoBehaviour
         {
             spawningTimer.Stop();
         }
-    }
-
-    /// <summary>
-    /// It runs when the level starts
-    /// </summary>
-    private void OnLevelLoaded(int variables, int expressions)
-    {
-        
     }
 
     /// <summary>
