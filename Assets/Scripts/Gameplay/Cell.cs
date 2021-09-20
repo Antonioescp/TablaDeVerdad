@@ -14,18 +14,19 @@ public class Cell : MonoBehaviour
     [SerializeField] private GameEvent onSpawn;
     [SerializeField] private GameEvent onClick;
 
-    private CellState state = CellState.Unchanged;
+    public CellState State { get; private set; }
     private SpriteRenderer cellSprite;
 
     public int RowNumber { get; set; }
     public int ColumnNumber { get; set; }
-    public bool IsHeader { get; set; }
     public SpriteRenderer CellSprite => cellSprite;
 
     [Header(header: "Expression support")]
     [SerializeField] TextMeshPro expressionText;
 
     private static UnityEvent<Cell> onHeaderClicked;
+
+    private bool interactuable = true;
 
     private void Awake()
     {
@@ -39,7 +40,9 @@ public class Cell : MonoBehaviour
         onSpawn.Raise();
         onHeaderClicked.AddListener(OnHeaderClicked);
 
-        if(IsHeader)
+        State = CellState.Unchanged;
+
+        if(RowNumber == 0)
         {
             int variablesCount = ConfigurationUtils.Tables[GameManager.LevelSelected].variables.Count;
             if(ColumnNumber < variablesCount)
@@ -55,8 +58,8 @@ public class Cell : MonoBehaviour
 
     private void ChangeState()
     {
-        state = state == CellState.True ? CellState.False : CellState.True;
-        switch (state)
+        State = State == CellState.True ? CellState.False : CellState.True;
+        switch (State)
         {
             case CellState.True:
                 cellSprite.sprite = trueSprite;
@@ -69,7 +72,7 @@ public class Cell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(!IsHeader)
+        if(RowNumber != 0 && interactuable)
         {
             ChangeState();
             onClick.Raise();
@@ -83,13 +86,13 @@ public class Cell : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if(!IsHeader)
+        if(RowNumber != 0 && interactuable)
             anim.SetBool("Hover", true);
     }
 
     private void OnMouseExit()
     {
-        if(!IsHeader)
+        if(RowNumber != 0 && interactuable)
             anim.SetBool("Hover", false);
     }
 
@@ -98,6 +101,20 @@ public class Cell : MonoBehaviour
         if(cell != this)
         {
             anim.SetBool("HeaderHover", false);
+        }
+    }
+
+    public void Check(bool isCorrect)
+    {
+        interactuable = !isCorrect;
+        
+        if(isCorrect)
+        {
+            anim.SetTrigger("Correct");
+        }
+        else
+        {
+            anim.SetTrigger("Wrong");
         }
     }
 }

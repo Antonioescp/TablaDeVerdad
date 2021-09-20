@@ -7,6 +7,19 @@ public class UIButtonManager : MonoBehaviour
 {
     [SerializeField] GameEvent onClick;
     [SerializeField] GameEvent onInspectTable;
+    [SerializeField] GameEvent onFinishedCellSpawning;
+
+    [SerializeField] GameObject credits;
+
+    private bool canInspect;
+
+    public void Awake()
+    {
+        canInspect = false;
+        onFinishedCellSpawning.AddListener(OnFinishedSpawning);
+    }
+
+    public void OnFinishedSpawning() => canInspect = true;
 
     // PlayButton
     public void OnPlay()
@@ -35,6 +48,17 @@ public class UIButtonManager : MonoBehaviour
 
     public void OnCheckMarkClicked()
     {
+        if(canInspect)
+            onInspectTable.Raise();
+    }
 
+    public void OnExitCredits()
+    {
+        credits.SetActive(false);
+    }
+
+    public void OnEnterCredits()
+    {
+        credits.SetActive(true);
     }
 }

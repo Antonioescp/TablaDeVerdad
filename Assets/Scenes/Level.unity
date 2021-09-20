@@ -226,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cell: {fileID: 8156507744353116072, guid: ecfbf80f194e3e74c9ed248f4efb1bc4, type: 3}
   onInspectTable: {fileID: 11400000, guid: b5748573f517ada4fbdf3c541482d1e3, type: 2}
+  onFinishedSpawningCells: {fileID: 11400000, guid: 61ba155106dbe3f4ea0b7ae5ef926389, type: 2}
 --- !u!1 &1385536455
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onClick: {fileID: 11400000, guid: d205e43538f81404fa89e742c412a84b, type: 2}
   onInspectTable: {fileID: 11400000, guid: b5748573f517ada4fbdf3c541482d1e3, type: 2}
+  onFinishedCellSpawning: {fileID: 11400000, guid: 61ba155106dbe3f4ea0b7ae5ef926389, type: 2}
 --- !u!114 &2011502017
 MonoBehaviour:
   m_ObjectHideFlags: 0

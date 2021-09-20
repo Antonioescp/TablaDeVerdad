@@ -500,6 +500,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onClick: {fileID: 11400000, guid: d205e43538f81404fa89e742c412a84b, type: 2}
+  onInspectTable: {fileID: 11400000, guid: b5748573f517ada4fbdf3c541482d1e3, type: 2}
+  onFinishedCellSpawning: {fileID: 11400000, guid: 61ba155106dbe3f4ea0b7ae5ef926389, type: 2}
 --- !u!1001 &219220849
 PrefabInstance:
   m_ObjectHideFlags: 0

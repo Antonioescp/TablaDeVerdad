@@ -9,6 +9,7 @@ public class TableGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject cell;
     [SerializeField] private GameEvent onInspectTable;
+    [SerializeField] private GameEvent onFinishedSpawningCells;
 
     // Table cells
     private GameObject[,] cells;
@@ -18,6 +19,9 @@ public class TableGenerator : MonoBehaviour
 
     // Spawning timer (spawn one after another)
     Timer spawningTimer;
+
+    // Timer to validate each cell
+    Timer validationTimer;
 
     // Current row and column
     private int row = 0;
@@ -30,6 +34,13 @@ public class TableGenerator : MonoBehaviour
 
         // Setting timer for spawning cells
         spawningTimer = gameObject.AddComponent<Timer>();
+
+        // Timer for highlighting cells
+        // validationTimer = gameObject.AddComponent<Timer>();
+        // validationTimer.Duration = .1f;
+        // validationTimer.AddListener(null);
+
+        onInspectTable.AddListener(OnInspectTable);
     }
 
     /// <summary>
@@ -43,6 +54,19 @@ public class TableGenerator : MonoBehaviour
         // Generando tabla de la verdad a partir de datos de nivel
         GenerateTable(ConfigurationUtils.Tables[GameManager.LevelSelected].variables.Count, ConfigurationUtils.Tables[GameManager.LevelSelected].expressions.Count);
         SpawnNextCell();
+    }
+
+    private void OnInspectTable()
+    {
+        Table table = ConfigurationUtils.Tables[GameManager.LevelSelected];
+
+        for(int row = 1; row < table.Rows; row++)
+        {
+            for(int col = 0; col < table.Columns; col++)
+            {
+                cells[row, col].GetComponent<Cell>().Check(cells[row, col].GetComponent<Cell>().State == table.values[row - 1, col]);
+            }
+        }
     }
 
     /// <summary>
@@ -66,17 +90,19 @@ public class TableGenerator : MonoBehaviour
         }
         else
         {
+            onFinishedSpawningCells.Raise();
             spawningTimer.Stop();
         }
     }
 
     /// <summary>
-    /// Generates a table based on the amount of variables
+    /// Generates a table based on the amount of variables and expressions
     /// </summary>
     /// <param name="variablesQty">Amount of variables</param>
+    /// <param name="expressionsQty">Amount of expressions</param>
     private void GenerateTable(int variablesQty, int expressionsQty)
     {
-        // Calculating amount of cells required based on amount of variables
+        // Calculating amount of cells required based on amount of variables and expressions
         int columns = variablesQty + expressionsQty;
         int rows = (int)Mathf.Pow(2, variablesQty) + 1;
         
@@ -116,12 +142,6 @@ public class TableGenerator : MonoBehaviour
                 Cell currentCell = cells[row, col].GetComponent<Cell>();
                 currentCell.RowNumber = row;
                 currentCell.ColumnNumber = col;
-
-                // To make headers unclickable
-                if (row == 0)
-                    currentCell.IsHeader = true;
-                else
-                    currentCell.IsHeader = false;
             }
         }
     }

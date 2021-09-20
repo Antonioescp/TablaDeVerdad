@@ -6,7 +6,7 @@ public static class ConfigurationUtils
 {
     static ConfigurationData data = null;
 
-    public static List<ConfigurationData.Table> Tables => data.Tables;
+    public static List<Table> Tables => data.Tables;
 
     public static bool Initialized { get; private set; }
 
