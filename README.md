@@ -20,4 +20,4 @@ v,v,f,f;v,f,v,f
 ```
 como se observa, cada tabla debe empezar con '--' para facilitar la lectura humana.
 
-Las tabla se ubican en el centro de manera automatica.
+Las tablas en el juego se ubican en el centro de la pantalla manera automatica.
